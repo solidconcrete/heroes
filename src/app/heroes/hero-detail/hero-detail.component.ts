@@ -1,9 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Hero } from '../hero';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 
 import {HeroService} from '../hero.service';
+import {Observable} from 'rxjs';
 
 
 @Component({
@@ -13,18 +15,24 @@ import {HeroService} from '../hero.service';
 })
 export class HeroDetailComponent implements OnInit {
 
-  @Input() hero: Hero;
+  // @Input() hero: Hero;
+  hero$: Observable<Hero>;
   // inject services, save them in private fields
   constructor(
     // holds information about the HeroDetailComponent
     private route: ActivatedRoute,
     // gets hero data
-    private heroService: HeroService,
-    private location: Location
+    private service: HeroService,
+    // private location: Location
+    private router: Router
   ) { }
 
   ngOnInit(): void {
-    this.getHero();
+    // this.getHero();
+    this.hero$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.service.getHero(params.get('id')))
+    );
   }
 
   getHero(): void{

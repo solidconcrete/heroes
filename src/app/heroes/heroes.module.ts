@@ -6,6 +6,7 @@ import { HeroListComponent} from './hero-list/hero-list.component';
 
 import { HeroesRoutingModule } from './heroes-routing.module';
 import { HeroDetailComponent } from './hero-detail/hero-detail.component';
+import {FormsModule} from '@angular/forms';
 
 
 
@@ -13,6 +14,7 @@ import { HeroDetailComponent } from './hero-detail/hero-detail.component';
   declarations: [HeroDetailComponent, HeroDetailComponent],
   imports: [
     CommonModule,
+    FormsModule,
     HeroesRoutingModule
   ]
 })
